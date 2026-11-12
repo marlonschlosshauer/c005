@@ -1,0 +1,3 @@
+# Fixed seat shares for refunds
+
+Each seat receives a fixed share of the original course purchase payment, including discounts, with equal shares apart from consistently allocated currency rounding. Reviewers may approve a positive amount up to that share, defaulting to the full share, rather than deriving amounts from current course prices or recalculating shares as requests arrive; fixed allocation keeps independent seat decisions consistent and their total within the original payment. An approved request blocks further requests for that seat even when approval is partial or payment has not yet succeeded.
