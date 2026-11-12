@@ -11,7 +11,7 @@ A purchaser's payment for one or more seats on a particular course. Separate pur
 The person who paid for a course purchase, who alone may request a return of its payment and receive the returned money. The purchaser may be different from the person using a seat.
 
 **Seat**:
-An entitlement for one person to access a course, bought as part of a course purchase. Only a successfully completed refund payment removes that seat's access, even when only part of its payment is returned.
+An entitlement for one person to access a course, bought as part of a course purchase. Only a successfully completed refund payment removes that seat's access, even when only part of its payment is returned; the learner's progress and associated learning history are retained independently of the seat.
 
 **Refund**:
 A return of all or part of one seat's fixed share of the original course purchase payment, including discounts, with the amount determined by a reviewer and capped at that share; shares are equal apart from consistently allocated currency rounding. A refund request asks for that return and does not mean the payment has already been returned.
