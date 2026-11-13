@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useSearchParams } from "react-router";
 import type { Route } from "./+types/layout.app";
 import { Sidebar } from "~/components/sidebar";
 import { DevUI } from "~/components/dev-ui";
@@ -185,7 +185,11 @@ export async function loader({ request }: Route.LoaderArgs) {
           course.courseId
         );
         const totalLessons = getTotalLessonCount(course.courseId);
-        const progress = calculateProgress(currentUserId, course.courseId, false);
+        const progress = calculateProgress(
+          currentUserId,
+          course.courseId,
+          false
+        );
         return {
           courseId: course.courseId,
           title: course.courseTitle,
@@ -217,6 +221,10 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export default function AppLayout({ loaderData }: Route.ComponentProps) {
+  const [prototypeParams] = useSearchParams();
+  const notificationPrototype =
+    import.meta.env.DEV &&
+    ["A", "B", "C"].includes(prototypeParams.get("variant") ?? "");
   const {
     users,
     currentUser,
@@ -228,13 +236,25 @@ export default function AppLayout({ loaderData }: Route.ComponentProps) {
   } = loaderData;
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div
+      className={
+        notificationPrototype
+          ? "flex h-screen overflow-hidden max-md:[&>aside]:hidden"
+          : "flex h-screen overflow-hidden"
+      }
+    >
       <Sidebar
         currentUser={currentUser}
         recentCourses={recentCourses}
         isTeamAdmin={userIsTeamAdmin}
       />
-      <main className="flex-1 overflow-y-auto">
+      <main
+        className={
+          notificationPrototype
+            ? "min-w-0 flex-1 overflow-y-auto"
+            : "flex-1 overflow-y-auto"
+        }
+      >
         <Outlet />
       </main>
       <DevUI
