@@ -1,6 +1,6 @@
 # Notification inbox prototype
 
-Throwaway primary source for [How should the notification inbox behave for each role?](https://github.com/marlonschlosshauer/c005/issues/4). No production implementation or notification provider integration. Verdict: **awaiting human review**.
+Throwaway primary source for [How should the notification inbox behave for each role?](https://github.com/marlonschlosshauer/c005/issues/4). No production implementation or notification provider integration. Verdict: **Variant C selected by the human**. Its split list/detail experience feels like the email channel, providing a shared design language across both channels. The canonical behavior and follow-up decisions are recorded in the linked issue resolution.
 
 The question is which entry point, list/read flow, and preference presentation fit Cadence. Three structurally different variants live on the existing dashboard, preserving its loader and authentication. The real sidebar and dashboard provide context. On narrow screens the prototype hides the existing fixed-width sidebar to leave room for the inbox; this adaptation is gated to prototype previews. The prototype only appears in development when `variant=A`, `B`, or `C` is present.
 
@@ -32,15 +32,11 @@ Open [the prototype](http://127.0.0.1:5174/dashboard?variant=A). If prompted, se
 
 Notification actions show a safe example destination preview instead of navigating/mutating actual product data. Sample content and destinations illustrate a reading flow; the content/destination decision ticket settles the final contract. The prototype does not implement provider failures, retention, delivery retries, history beyond mock pagination, or real live-update transport.
 
-## Decisions still requiring human review
+## Review outcome
 
-- Bell/panel, dedicated page, split view, or a combination; where global entry points belong across roles and narrow screens.
-- Unified versus role-specific inbox; All/Unread filters and unread badge semantics.
-- Exact read/unread trigger, bulk scope, and whether archive/delete actions are needed.
-- Ordering, initial page size/history navigation, and behavior when an item arrives while reading.
-- How fresh the badge/list should feel; implementation transport belongs to architecture.
-- Preference presentation, required-message explanation, and save/error feedback.
-- Responsive reading flow and keyboard interaction.
+The human selected C and completed the inbox-behavior discussion in [How should the notification inbox behave for each role?](https://github.com/marlonschlosshauer/c005/issues/4). That ticket holds the canonical resolution; this artifact is the primary source that informed it.
+
+The original prototype is preserved as reviewed, including its alternative layouts and mock interactions. It is not an implementation of every final decision: its small sample pagination, narrow-screen stacked layout, inline preferences, and lack of real live updates must not be mistaken for the resolved production behavior. Follow the ticket when implementing, rather than promoting this throwaway code.
 
 ## Captured views
 
