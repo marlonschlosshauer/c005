@@ -8,6 +8,7 @@ import {
   type DropResult,
 } from "@hello-pangea/dnd";
 import type { Route } from "./+types/instructor.$courseId";
+import { deleteSavedForLessons } from "~/lib/saved.server";
 import { getCurrentUserId } from "~/lib/session";
 import { CourseStatus, UserRole } from "~/db/schema";
 import { db } from "~/db";
@@ -234,9 +235,17 @@ function updateModuleTitle(id: number, title: string) {
 }
 
 function deleteModule(id: number) {
-  // Delete all lessons in this module first
-  db.delete(lessons).where(eq(lessons.moduleId, id)).run();
-  return db.delete(modules).where(eq(modules.id, id)).returning().get();
+  return db.transaction((tx) => {
+    const lessonIds = tx
+      .select({ id: lessons.id })
+      .from(lessons)
+      .where(eq(lessons.moduleId, id))
+      .all()
+      .map((lesson) => lesson.id);
+    deleteSavedForLessons(tx, lessonIds);
+    tx.delete(lessons).where(eq(lessons.moduleId, id)).run();
+    return tx.delete(modules).where(eq(modules.id, id)).returning().get();
+  });
 }
 
 function reorderModules(courseId: number, moduleIds: number[]) {
@@ -302,7 +311,10 @@ function updateLessonTitle(id: number, title: string) {
 }
 
 function deleteLesson(id: number) {
-  return db.delete(lessons).where(eq(lessons.id, id)).returning().get();
+  return db.transaction((tx) => {
+    deleteSavedForLessons(tx, [id]);
+    return tx.delete(lessons).where(eq(lessons.id, id)).returning().get();
+  });
 }
 
 function reorderLessons(moduleId: number, lessonIds: number[]) {
